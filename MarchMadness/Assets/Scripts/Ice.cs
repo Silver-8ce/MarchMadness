@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Ice : MonoBehaviour
 {
-    const int dimension = 7;
+    public const int dimension = 7;
 
     [SerializeField] private GameObject iceTilePrefab;
     public IceSquare[,] iceSquares = new IceSquare[7, 7];
     public static Ice instance;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {
@@ -42,6 +42,7 @@ public class IceSquare
     public GameObject tile;
     public SpriteRenderer sprite;
     private Sprite tileSprite;
+    public List<Fish> fishOnTile;
 
     public IceSquare(float xPos, float yPos, GameObject tile)
     {
@@ -52,12 +53,18 @@ public class IceSquare
         iceBroken = false;
         playerPresent = false;
         tileSprite = sprite.sprite;
+        fishOnTile = new List<Fish>();
     }
    
     public void BreakIce()
     {
         iceBroken = true;
         sprite.sprite = null;
+        foreach(Fish fish in fishOnTile)
+        {
+            fish.Caught();
+        }
+        fishOnTile.Clear();
     }
 
     public void RepairIce()

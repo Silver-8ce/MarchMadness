@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
         UP, DOWN, LEFT, RIGHT
     }
     int xPosition, yPosition;
+    Animation breakingIceAnimation;
 
     void Start()
     {
+        breakingIceAnimation = GetComponent<Animation>();
         xPosition = 3; 
         yPosition = 3;
     }
@@ -37,7 +39,8 @@ public class Player : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
-            BreakIce();
+            breakingIceAnimation.Play();
+            //BreakIce();
         }
     }
 
